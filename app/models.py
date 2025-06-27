@@ -15,7 +15,7 @@ CATEGORY_CHOICES = (
     ('BW', 'Bottom Wear'),
 )
 
-class customer(models.Model):
+class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     locality = models.CharField(max_length=255)
@@ -25,7 +25,7 @@ class customer(models.Model):
 
     def __str__(self):
         return str(self.id)
-    class product(models.Model):
+class Product(models.Model):
         title = models.CharField(max_length=100)
         selling_price = models.FloatField()
         discounted_price = models.FloatField()
@@ -37,7 +37,7 @@ class customer(models.Model):
         def __str__(self):
             return str(self.id)
         
-class cart(models.Model):
+class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey('product', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
@@ -51,9 +51,9 @@ STATE_CHOICES = (
     ('Delivered', 'Delivered'),
     ('Cancelled', 'Cancelled'),
 )
-class orderPlaced(models.Model):
+class OrderPlaced(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    customer = models.ForeignKey(customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey('product', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     ordered_date = models.DateTimeField(auto_now_add=True)

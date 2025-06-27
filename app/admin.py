@@ -1,3 +1,22 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Customer, Product, Cart, OrderPlaced
+
+@admin.register(Customer)
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'name', 'locality', 'city', 'state', 'zipcode']
+    search_fields = ['name', 'locality', 'city']
+    list_filter = ['state']
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'selling_price', 'discounted_price', 'description', 'brand', 'category', 'product_image']
+    
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'product', 'quantity']
+   
+@admin.register(OrderPlaced)
+class OrderPlacedAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'customer', 'product', 'quantity', 'ordered_date', 'status']
+    

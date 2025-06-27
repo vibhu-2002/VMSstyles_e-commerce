@@ -1,9 +1,25 @@
 from django.shortcuts import render
+from django.views import View
 
-def home(request):
- return render(request, 'app/home.html')
+from .models import Product, Cart, Customer, OrderPlaced
+# def home(request):
+#  return render(request, 'app/home.html')
 
-def product_detail(request):
+class ProductView(View):  # ✅ fixed casing
+    def get(self, request):
+        topwears = Product.objects.filter(category='TW')
+        bottomwears = Product.objects.filter(category='BW')
+        mobiles = Product.objects.filter(category='M')
+        return render(request, 'app/home.html', {
+            'topwears': topwears,
+            'bottomwears': bottomwears,
+            'mobiles': mobiles
+        })
+
+def product_detail(request):  # ✅ lowercase function name
+    return render(request, 'app/productdetail.html')
+ 
+def Product_detail(request):
  return render(request, 'app/productdetail.html')
 
 def add_to_cart(request):
