@@ -16,11 +16,14 @@ class ProductView(View):  # ✅ fixed casing
             'mobiles': mobiles
         })
 
-def product_detail(request):  # ✅ lowercase function name
-    return render(request, 'app/productdetail.html')
+# def product_detail(request):  # ✅ lowercase function name
+#     return render(request, 'app/productdetail.html')
  
-def Product_detail(request):
- return render(request, 'app/productdetail.html')
+class ProductDetailView(View):  # ✅ fixed casing
+    def get(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        return render(request, 'app/productdetail.html', {'product': product})
+
 
 def add_to_cart(request):
  return render(request, 'app/addtocart.html')
