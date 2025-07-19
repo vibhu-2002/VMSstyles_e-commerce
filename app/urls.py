@@ -18,6 +18,6 @@ urlpatterns = [
     path('mobile/<slug:data>/', views.mobile, name='mobiledata'),  # ✅ trailing slash fixed
     
     path('login/', views.login, name='login'),
-    path('registration/', views.customerregistration, name='customerregistration'),
     path('checkout/', views.checkout, name='checkout'),
+    path('registration/', views.CustomerRegistrationView.as_view(), name='customerregistration'),  # ✅ fixed casing and view usage
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
