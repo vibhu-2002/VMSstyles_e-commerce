@@ -15,11 +15,10 @@ class ProductView(View):  # ✅ fixed casing
             'bottomwears': bottomwears,
             'mobiles': mobiles
         })
+# def Product_detail(request):
+#  return render(request, 'app/productdetail.html')
 
-# def product_detail(request):  # ✅ lowercase function name
-#     return render(request, 'app/productdetail.html')
- 
-class ProductDetailView(View):  # ✅ fixed casing
+class ProductDetailView(View):  # ✅ fixed casing 
     def get(self, request, pk):
         product = Product.objects.get(pk=pk)
         return render(request, 'app/productdetail.html', {'product': product})
@@ -43,8 +42,19 @@ def orders(request):
 def change_password(request):
  return render(request, 'app/changepassword.html')
 
-def mobile(request):
- return render(request, 'app/mobile.html')
+def mobile(request, data=None):
+    if data is None:
+        mobiles = Product.objects.filter(category='M')
+    elif data.lower() in ['redmi', 'samsung']:
+        mobiles = Product.objects.filter(category='M', brand__iexact=data)
+    elif data == 'below':
+        mobiles = Product.objects.filter(category='M', discounted_price__lt=200)
+    elif data == 'above':
+        mobiles = Product.objects.filter(category='M', discounted_price__gt=200)
+    else:
+        mobiles = Product.objects.filter(category='M')  # fallback for unknown data
+
+    return render(request, 'app/mobile.html', {'mobiles': mobiles})
 
 def login(request):
  return render(request, 'app/login.html')

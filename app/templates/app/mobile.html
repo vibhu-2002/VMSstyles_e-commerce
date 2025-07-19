@@ -5,11 +5,33 @@
 <div class="container my-5">
  <div class="row">
   <div class="col-sm-3">
-   Side Bar for Mobile filter
+    <div class="list-group">
+     <a href="{% url 'mobile' %}" class="list-group-item list-group-item-action" aria-current="true">All Mobile</a>
+     <a href="{% url 'mobiledata' 'Redmi' %}" class="list-group-item list-group-item-action">Redmi</a>
+     <a href="{% url 'mobiledata' 'Samsung' %}" class="list-group-item list-group-item-action">Samsung</a>
+     <a href="{% url 'mobiledata' 'below' %}" class="list-group-item list-group-item-action">Below 200</a>
+     <a href="{% url 'mobiledata' 'above' %}" class="list-group-item list-group-item-action">Above 200</a>
+    </div>
   </div>
-  <div class="col-sm-8 offset-sm-1">
-   Mobile Product List
+  <div class="col-sm-8">
+   <div class="row">
+    {% if mobiles %}
+      {% for product in mobiles %}
+      <div class="col-sm-4 text-center mb-4">
+        <div class="item border p-2">
+          <a href="{% url 'product-detail' product.id %}">
+            <img src="{{ product.product_image.url }}" alt="{{ product.title }}" height="300" class="img-fluid">
+            <div class="fw-bold">{{ product.title }}</div>
+            <div class="fw-bold">₹{{ product.discounted_price }}</div>
+            <small class="fw-light text-decoration-line-through">₹{{ product.selling_price }}</small>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p>No mobile phones found for this category.</p>
+    {% endif %}
+   </div>
   </div>
- </div>
 </div>
 {% endblock main-content %}
