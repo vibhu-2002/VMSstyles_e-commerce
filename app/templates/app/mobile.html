@@ -22,8 +22,8 @@
           <a href="{% url 'product-detail' product.id %}">
             <img src="{{ product.product_image.url }}" alt="{{ product.title }}" height="300" class="img-fluid">
             <div class="fw-bold">{{ product.title }}</div>
-            <div class="fw-bold">₹{{ product.discounted_price }}</div>
-            <small class="fw-light text-decoration-line-through">₹{{ product.selling_price }}</small>
+            <div class="fw-bold">£{{ product.discounted_price }}</div>
+            <small class="fw-light text-decoration-line-through">£{{ product.selling_price }}</small>
           </a>
         </div>
       </div>

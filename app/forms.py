@@ -1,6 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm, UsernameField
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 class CustomerRegistrationForm(UserCreationForm):
     password1 = forms.CharField(
@@ -29,3 +30,19 @@ class CustomerRegistrationForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("Email address must be unique.")
         return email
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'autofocus': True,
+        'class': 'form-control',
+        'placeholder': 'Username',
+    }))
+    password = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Password',
+    }))
+
+    class Meta:
+        model = User
+        fields = ('username', 'password')
