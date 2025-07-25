@@ -3,7 +3,8 @@ from django.contrib.auth.forms import (
     UserCreationForm,
     AuthenticationForm,
     UsernameField,
-    PasswordChangeForm
+    PasswordChangeForm,
+    PasswordResetForm,
 )
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
@@ -23,7 +24,7 @@ class CustomerRegistrationForm(UserCreationForm):
         widget=forms.EmailInput(attrs={'class': 'form-control'})
     )
 
-    class Meta:
+class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
         labels = {'email': 'Email'}
@@ -31,7 +32,7 @@ class CustomerRegistrationForm(UserCreationForm):
             'username': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-    def clean_email(self):
+def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("Email address must be unique.")
@@ -80,3 +81,15 @@ class MyPasswordChangeForm(PasswordChangeForm):
             'class': 'form-control'
         })
     )
+
+class MyPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        label=_("Email"),
+        max_length=254,
+        widget=forms.EmailInput(attrs={
+            'autocomplete': 'email',
+            'class': 'form-control',
+            'placeholder': 'Enter your email address'
+        })
+    )
+
