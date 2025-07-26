@@ -3,7 +3,7 @@ from app import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from app.forms import LoginForm, MyPasswordChangeForm, MyPasswordResetForm
+from app.forms import LoginForm, MyPasswordChangeForm, MyPasswordResetForm, MySetPasswordForm
 
 urlpatterns = [
 # Product Routes
@@ -21,7 +21,7 @@ path('checkout/', views.checkout, name='checkout'),
 path('orders/', views.orders, name='orders'),
 
 # User Profile
-path('profile/', views.profile, name='profile'),
+path('profile/', views.ProfileView.as_view(), name='profile'),
 path('address/', views.address, name='address'),
 
 
@@ -50,7 +50,8 @@ path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(
 ), name='password_reset_done'),
 
 path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
-    template_name='app/password_reset_confirm.html'
+    template_name='app/password_reset_confirm.html',
+    form_class=MySetPasswordForm
 ), name='password_reset_confirm'),
 
 path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(
