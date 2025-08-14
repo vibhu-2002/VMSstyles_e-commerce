@@ -15,7 +15,11 @@ path('mobile/', views.mobile, name='mobile'),
 path('mobile/<slug:data>/', views.mobile, name='mobiledata'),
 
 # Cart & Orders
-path('cart/', views.add_to_cart, name='add-to-cart'),
+path('add-to-cart/', views.add_to_cart, name='add-to-cart'),
+path('cart/',views.show_cart, name='showcart'),
+path('pluscart/', views.plus_cart),
+path('minuscart/', views.minus_cart),
+path('removecart/', views.remove_cart),
 path('buy/', views.buy_now, name='buy-now'),
 path('checkout/', views.checkout, name='checkout'),
 path('orders/', views.orders, name='orders'),

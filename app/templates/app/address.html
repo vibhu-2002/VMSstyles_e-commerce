@@ -1,42 +1,47 @@
 {% extends 'app/base.html' %}
 {% load static %}
-{% block title %}Buy Now{% endblock title %}
+{% block title %}Address{% endblock title %}
+
 {% block main-content %}
 <div class="container my-5">
- <div class="row">
- <h3>Welcome Vibhu</h3>
-  <div class="col-sm-2 border-end">
-   <ul class="list-unstyled">
-    <li class="d-grid"><a href="{% url 'profile' %}" class="btn btn-primary">Profile</a></li>
-    <li class="d-grid"><a href="{% url 'address' %}" class="btn">Address</a></li>
-   </ul>
-  </div>
-  <div class="col-sm-9 offset-sm-1">
-   <div class="row">
-    <div class="col-sm-6">
-     <div class="card">
-      <div class="card-body">
-       <h3>Addr ess 1</h3>
-       <p>Name: Rahul Kumar</p>
-       <p>Address 1: trivandrum</p>
-       <p>Address 2: kollam</p>
-       <p>State: Kerala</p>
-      </div>
-     </div>
+  <div class="row">
+    <div class="col-12 mb-3">
+      <h3>Welcome <span class="text-capitalize">{{ request.user }}</span></h3>
     </div>
-    <div class="col-sm-6">
-     <div class="card">
-      <div class="card-body">
-       <h3>Address 2</h3>
-       <p>Name: Rohit Kumar</p>
-       <p>Address 1: kasargod</p>
-       <p>Address 2: alapuzha</p>
-       <p>State: kerala</p>
-      </div>
-     </div>
+
+    <div class="col-sm-2 border-end">
+      <ul class="list-unstyled">
+        <li class="d-grid">
+          <a href="{% url 'profile' %}" class="btn btn-outline-secondary">Profile</a>
+        </li>
+        <li class="d-grid">
+          <a href="{% url 'address' %}" class="btn btn-primary">Address</a>
+        </li>
+      </ul>
     </div>
-   </div>
+
+    <div class="col-sm-9 offset-sm-1">
+      <div class="row">
+        {% if add %}
+          {% for ad in add %}
+          <div class="col-sm-6">
+            <div class="card mb-3 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">Address {{ forloop.counter }}</h5>
+                <p><strong>Name:</strong> {{ ad.name }}</p>
+                <p><strong>Locality:</strong> {{ ad.locality }}</p>
+                <p><strong>City:</strong> {{ ad.city }}</p>
+                <p><strong>State:</strong> {{ ad.state }}</p>
+                <p><strong>Pin Code:</strong> {{ ad.zipcode }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p>No addresses found.</p>
+        {% endif %}
+      </div>
+    </div>
   </div>
- </div>
 </div>
 {% endblock main-content %}

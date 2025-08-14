@@ -27,7 +27,7 @@ class CustomerRegistrationForm(UserCreationForm):
         widget=forms.EmailInput(attrs={'class': 'form-control'})
     )
 
-class Meta:
+    class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
         labels = {'email': 'Email'}
@@ -35,7 +35,7 @@ class Meta:
             'username': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-def clean_email(self):
+    def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("Email address must be unique.")
@@ -85,6 +85,7 @@ class MyPasswordChangeForm(PasswordChangeForm):
         })
     )
 
+
 class MyPasswordResetForm(PasswordResetForm):
     email = forms.EmailField(
         label=_("Email"),
@@ -95,6 +96,7 @@ class MyPasswordResetForm(PasswordResetForm):
             'placeholder': 'Enter your email address'
         })
     )
+
 
 class MySetPasswordForm(SetPasswordForm):
     new_password1 = forms.CharField(
@@ -115,6 +117,7 @@ class MySetPasswordForm(SetPasswordForm):
         })
     )
 
+
 class CustomerProfileForm(forms.ModelForm):
     class Meta:
         model = Customer
@@ -126,4 +129,3 @@ class CustomerProfileForm(forms.ModelForm):
             'state': forms.Select(attrs={'class': 'form-control'}),
             'zipcode': forms.NumberInput(attrs={'class': 'form-control'})
         }
-           
